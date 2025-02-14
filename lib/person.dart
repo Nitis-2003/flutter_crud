@@ -1,9 +1,9 @@
 class Person {
-  final int id;
+  final int? id;
   final String name;
   final String department;
 
-  Person({required this.id, required this.name, required this.department});
+  Person({this.id, required this.name, required this.department});
 
   // แปลง object Person เป็นรูปแบบคล้ายกับ JSON
   Map<String, dynamic> toMap() {
