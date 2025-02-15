@@ -1,6 +1,5 @@
 import 'package:flutter_crud/person.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite/sqlite_api.dart';
 import 'package:path/path.dart';
 
 class Dbhelper {
@@ -34,7 +33,7 @@ class Dbhelper {
     );
   }
 
-  Future<List<Map<String,dynamic>>> queryAll() async {
+  Future<List<Map<String, dynamic>>> queryAll() async {
     Database db = await instance.db;
     return await db.query('employees');
   }

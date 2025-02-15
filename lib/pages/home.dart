@@ -31,7 +31,6 @@ class _HomeState extends State<Home> {
       appBar: AppBar(title: Text("CRUD")),
       body: Column(
         children: [
-          Text("Debug"),
           Text("$empdata"),
           ElevatedButton(
             onPressed: () {
@@ -72,6 +71,8 @@ class _HomeState extends State<Home> {
   void insert() {
     TextEditingController inputName = TextEditingController();
     TextEditingController inputDepartment = TextEditingController();
+    TextEditingController inputName = TextEditingController();
+    TextEditingController inputDepartment = TextEditingController();
 
     showDialog(
       context: context,
@@ -82,9 +83,11 @@ class _HomeState extends State<Home> {
             children: [
               TextField(
                 controller: inputName,
+                controller: inputName,
                 decoration: InputDecoration(labelText: 'Enter Name'),
               ),
               TextField(
+                controller: inputDepartment,
                 controller: inputDepartment,
                 decoration: InputDecoration(labelText: 'Enter Department'),
               ),
@@ -94,6 +97,8 @@ class _HomeState extends State<Home> {
             TextButton(
               onPressed: () async {
                 var employee = Person(
+                  name: inputName.text,
+                  department: inputDepartment.text,
                   name: inputName.text,
                   department: inputDepartment.text,
                 );
