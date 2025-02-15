@@ -31,7 +31,6 @@ class _HomeState extends State<Home> {
       appBar: AppBar(title: Text("CRUD")),
       body: Column(
         children: [
-          Text("Debug"),
           Text("$empdata"),
           ElevatedButton(
             onPressed: () {
