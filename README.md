@@ -1,3 +1,2 @@
-# flutter_crud
-
-ทดลองทำระบบ CRUD ด้วย Flutter ใช้ sqflite ในการเชื่อม database
+# วิธีใช้งาน
+ใช้คำสั่ง flutter pub get หลังจาก clone project
