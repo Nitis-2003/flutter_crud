@@ -38,4 +38,13 @@ class Dbhelper {
     Database db = await instance.db;
     return await db.query('employees');
   }
+
+  Future<void> deleteEmp(int id) async {
+    Database db = await instance.db;
+    await db.delete(
+      'employees',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
 }
