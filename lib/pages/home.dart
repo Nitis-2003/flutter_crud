@@ -31,7 +31,6 @@ class _HomeState extends State<Home> {
       appBar: AppBar(title: Text("CRUD")),
       body: Column(
         children: [
-          Text("Debug"),
           Text("$empdata"),
           ElevatedButton(
             onPressed: () {
@@ -39,30 +38,15 @@ class _HomeState extends State<Home> {
             },
             child: Text("Insert"),
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: empdata.length,
-              itemBuilder: (context, i) {
-                return Card(
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        'https://icons.veryicon.com/png/o/miscellaneous/standard/avatar-15.png',
-                      ),
-                    ),
-                    title: Text(empdata[i]['name']),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ElevatedButton(onPressed: (){}, child: Icon(Icons.edit)),
-                        SizedBox(width: 5),
-                        ElevatedButton(onPressed: (){}, child: Icon(Icons.delete)),
-                      ]
-                    ),
-                  ),
-                );
-              },
-            ),
+          ListView.builder(
+            itemCount: empdata.length,
+            itemBuilder: (context, i) {
+              return Card(
+                child: ListTile(
+                  title: Text(empdata[i]['name']),
+                )
+              );
+            },
           ),
         ],
       ),
@@ -70,8 +54,8 @@ class _HomeState extends State<Home> {
   }
 
   void insert() {
-    TextEditingController input_name = TextEditingController();
-    TextEditingController input_department = TextEditingController();
+    TextEditingController inputName = TextEditingController();
+    TextEditingController inputDepartment = TextEditingController();
 
     showDialog(
       context: context,
@@ -81,11 +65,11 @@ class _HomeState extends State<Home> {
           content: Column(
             children: [
               TextField(
-                controller: input_name,
+                controller: inputName,
                 decoration: InputDecoration(labelText: 'Enter Name'),
               ),
               TextField(
-                controller: input_department,
+                controller: inputDepartment,
                 decoration: InputDecoration(labelText: 'Enter Department'),
               ),
             ],
@@ -94,8 +78,8 @@ class _HomeState extends State<Home> {
             TextButton(
               onPressed: () async {
                 var employee = Person(
-                  name: input_name.text,
-                  department: input_department.text,
+                  name: inputName.text,
+                  department: inputDepartment.text,
                 );
 
                 await Dbhelper.instance.insertEmp(employee);
