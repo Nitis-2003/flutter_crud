@@ -40,10 +40,15 @@ class Dbhelper {
 
   Future<void> deleteEmp(int id) async {
     Database db = await instance.db;
-    await db.delete(
+    await db.delete('employees', where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<void> updateEmp(Person emp) async {
+    Database db = await instance.db;
+    await db.update(
       'employees',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+      emp.toMap(),
+      where: 'id = ?', 
+      whereArgs: [emp.id]);
   }
 }

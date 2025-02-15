@@ -31,7 +31,6 @@ class _HomeState extends State<Home> {
       appBar: AppBar(title: Text("CRUD")),
       body: Column(
         children: [
-          Text("$empdata"),
           ElevatedButton(
             onPressed: () {
               insert();
@@ -49,11 +48,12 @@ class _HomeState extends State<Home> {
                         'https://icons.veryicon.com/png/o/miscellaneous/standard/avatar-15.png',
                       ),
                     ),
-                    title: Text(empdata[i]['name']),
+                    title: Text("Name: ${empdata[i]['name']}"),
+                    subtitle: Text("Dept: ${empdata[i]['department']}"),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        ElevatedButton(onPressed: (){}, child: Icon(Icons.edit)),
+                        ElevatedButton(onPressed: (){update(i);}, child: Icon(Icons.edit)),
                         SizedBox(width: 5),
                         ElevatedButton(onPressed: (){delete(empdata[i]['id']);}, child: Icon(Icons.delete)),
                       ]
@@ -78,6 +78,7 @@ class _HomeState extends State<Home> {
         return AlertDialog(
           title: Text("Employee Insert"),
           content: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: inputName,
@@ -114,5 +115,53 @@ class _HomeState extends State<Home> {
   void delete(int id) async{
     await Dbhelper.instance.deleteEmp(id);
     loadData();
+  }
+
+  void update(int index) {
+    int id = empdata[index]['id'];
+    TextEditingController inputName = TextEditingController(text: empdata[index]['name']);
+    TextEditingController inputDepartment = TextEditingController(text: empdata[index]['department']);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Employee Edit"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: inputName,
+                decoration: InputDecoration(labelText: 'Enter Name'),
+              ),
+              TextField(
+                controller: inputDepartment,
+                decoration: InputDecoration(labelText: 'Enter Department'),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                var employee = Person(
+                  id: id,
+                  name: inputName.text,
+                  department: inputDepartment.text,
+                );
+                
+                print("DEBUG =============== $employee");
+
+                await Dbhelper.instance.updateEmp(employee);
+                empdata = await Dbhelper.instance.queryAll();
+                setState(() {
+                  Navigator.pop(context);
+                });
+              },
+              child: Text("Update"),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
