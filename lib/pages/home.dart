@@ -46,10 +46,20 @@ class _HomeState extends State<Home> {
                 return Card(
                   child: ListTile(
                     leading: CircleAvatar(
-                      backgroundImage: NetworkImage('https://icons.veryicon.com/png/o/miscellaneous/standard/avatar-15.png'),
+                      backgroundImage: NetworkImage(
+                        'https://icons.veryicon.com/png/o/miscellaneous/standard/avatar-15.png',
+                      ),
                     ),
                     title: Text(empdata[i]['name']),
-                  )
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ElevatedButton(onPressed: (){}, child: Icon(Icons.edit)),
+                        SizedBox(width: 5),
+                        ElevatedButton(onPressed: (){}, child: Icon(Icons.delete)),
+                      ]
+                    ),
+                  ),
                 );
               },
             ),
