@@ -18,7 +18,7 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
-  void loadData() async{
+  void loadData() async {
     var data = await Dbhelper.instance.queryAll();
     setState(() {
       empdata = data;
@@ -31,8 +31,29 @@ class _HomeState extends State<Home> {
       appBar: AppBar(title: Text("CRUD")),
       body: Column(
         children: [
+          Text("Debug"),
           Text("$empdata"),
-          ElevatedButton(onPressed: () {insert();}, child: Text("Insert")),
+          ElevatedButton(
+            onPressed: () {
+              insert();
+            },
+            child: Text("Insert"),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: empdata.length,
+              itemBuilder: (context, i) {
+                return Card(
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage('https://icons.veryicon.com/png/o/miscellaneous/standard/avatar-15.png'),
+                    ),
+                    title: Text(empdata[i]['name']),
+                  )
+                );
+              },
+            ),
+          ),
         ],
       ),
     );
